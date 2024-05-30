@@ -1,0 +1,13 @@
+# https://docs.github.com/en/actions/using-workflows/reusing-workflows#creating-a-reusable-workflow
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+name: R-CMD-check
+
+jobs:
+  call:
+    uses: 2DegreesInvesting/tiltDevTools/.github/workflows/R-CMD-check.yaml@main
+    secrets: inherit
