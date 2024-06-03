@@ -112,7 +112,7 @@ set_na_benchmark_tr_score <- function(data,
       benchmark_tr_score = ifelse(
         is.na(.data[[col_ranking]]) | is.na(.data[[col_target]]),
         NA,
-        benchmark_tr_score
+        .data$benchmark_tr_score
       )
     )
 }
