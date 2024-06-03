@@ -1,5 +1,4 @@
 test_that("outputs `NA` tranistion risk thresholds for `NA` transition risk score", {
-  options(readr.show_col_types = FALSE)
   emissions_profile_products <- read_csv(toy_emissions_profile_products_ecoinvent()) |>
     filter(activity_uuid_product_uuid != "76269c17-78d6-420b-991a-aa38c51b45b7")
   all_uuids_scenario_sectors <- read_csv(toy_sector_profile_companies()) |>
@@ -8,7 +7,7 @@ test_that("outputs `NA` tranistion risk thresholds for `NA` transition risk scor
     filter(activity_uuid_product_uuid == "76269c17-78d6-420b-991a-aa38c51b45b7")
   scenarios <- read_csv(toy_sector_profile_any_scenarios())
 
-  output <- add_thresholds_transition_risk(
+  output <- transition_risk_profile(
     emissions_profile_products,
     all_uuids_scenario_sectors,
     scenarios
@@ -23,14 +22,13 @@ test_that("outputs `NA` tranistion risk thresholds for `NA` transition risk scor
 })
 
 test_that("low and high tranistion risk thresholds distribute all activities in three equal parts for each benchmark", {
-  options(readr.show_col_types = FALSE)
   emissions_profile_products <- read_csv(toy_emissions_profile_products_ecoinvent())
   all_uuids_scenario_sectors <- read_csv(toy_sector_profile_companies()) |>
     select(-c("companies_id", "company_name", "clustered")) |>
     distinct()
   scenarios <- read_csv(toy_sector_profile_any_scenarios())
 
-  output <- add_thresholds_transition_risk(
+  output <- transition_risk_profile(
     emissions_profile_products,
     all_uuids_scenario_sectors,
     scenarios
@@ -46,4 +44,18 @@ test_that("low and high tranistion risk thresholds distribute all activities in 
   expect_equal(nrow(filter(output, transition_risk_score <= low_threshold)), one_third_number_of_activities)
   # Number of activities above high threshold is 1/3rd the total number of activities
   expect_equal(nrow(filter(output, transition_risk_score > high_threshold)), one_third_number_of_activities)
+})
+
+test_that("TODO Remove after refactoring", {
+  products <- read_csv(toy_emissions_profile_products_ecoinvent())
+  products_scenarios <- read_csv(toy_sector_profile_companies()) |>
+    select(-c("companies_id", "company_name", "clustered")) |>
+    distinct()
+  scenarios <- read_csv(toy_sector_profile_any_scenarios())
+
+  out <- transition_risk_profile(products, products_scenarios, scenarios)
+
+  expect_snapshot(str(head(out)))
+
+  expect_snapshot(str(tail(out)))
 })

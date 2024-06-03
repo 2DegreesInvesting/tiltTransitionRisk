@@ -20,7 +20,8 @@ Imports:
     readr,
     stats,
     tiltIndicator (>= 0.0.0.9223),
-    tiltToyData (>= 0.0.0.9204)
+    tiltToyData (>= 0.0.0.9204),
+    withr
 Remotes: 
     2degreesinvesting/tiltToyData,
     2DegreesInvesting/tiltIndicator
