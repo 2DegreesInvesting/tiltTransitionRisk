@@ -4,7 +4,11 @@
 \alias{create_tr_benchmarks_tr_score}
 \title{Calulate \code{transition_risk_score} and \code{benchmark_tr_score} columns}
 \usage{
-create_tr_benchmarks_tr_score(data, profile_ranking, reduction_targets)
+create_tr_benchmarks_tr_score(
+  data,
+  col_ranking = "profile_ranking",
+  col_target = "reductions"
+)
 }
 \arguments{
 \item{data}{Dataframe.}

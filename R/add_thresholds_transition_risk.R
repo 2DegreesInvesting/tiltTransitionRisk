@@ -28,8 +28,8 @@
 #' )
 #' output
 add_thresholds_transition_risk <- function(emissions_profile_products,
-                                                      all_uuids_scenario_sectors,
-                                                      scenarios) {
+                                           all_uuids_scenario_sectors,
+                                           scenarios) {
   epa_profile_ranking <- epa_compute_profile_ranking(emissions_profile_products) |>
     polish_profile_ranking()
 
@@ -45,9 +45,9 @@ add_thresholds_transition_risk <- function(emissions_profile_products,
     by = c("activity_uuid_product_uuid"),
     relationship = "many-to-many"
   ) |>
-    create_tr_benchmarks_tr_score(.data$profile_ranking, .data$reductions) |>
+    create_tr_benchmarks_tr_score("profile_ranking", "reductions") |>
     distinct() |>
-    add_low_high_transition_risk_thresholds(.by = "benchmark_tr_score")
+    add_low_high_transition_risk_thresholds()
 }
 
 #' Calulate `transition_risk_score` and `benchmark_tr_score` columns
@@ -57,16 +57,18 @@ add_thresholds_transition_risk <- function(emissions_profile_products,
 #' @param reduction_targets Dataframe column.
 #' @keywords internal
 #' @export
-create_tr_benchmarks_tr_score <- function(data, profile_ranking, reduction_targets) {
+create_tr_benchmarks_tr_score <- function(data,
+                                          col_ranking = "profile_ranking",
+                                          col_target = "reductions") {
   mutate(
     data,
     transition_risk_score = ifelse(
-      is.na({{ profile_ranking }}) | is.na({{ reduction_targets }}),
+      is.na(data[[col_ranking]]) | is.na(data[[col_target]]),
       NA,
-      ({{ profile_ranking }} + {{ reduction_targets }}) / 2
+      (data[[col_ranking]] + data[[col_target]]) / 2
     ),
     benchmark_tr_score = ifelse(
-      is.na({{ profile_ranking }}) | is.na({{ reduction_targets }}),
+      is.na(data[[col_ranking]]) | is.na(data[[col_target]]),
       NA,
       paste(.data$scenario_year, .data$grouped_by, sep = "_")
     )
@@ -75,16 +77,15 @@ create_tr_benchmarks_tr_score <- function(data, profile_ranking, reduction_targe
 
 add_low_high_transition_risk_thresholds <- function(data, .by) {
   mutate(data,
-    transition_risk_low_threshold = quantile(.data$transition_risk_score,
-      probs = c(1 / 3, 2 / 3),
-      na.rm = TRUE
-    )[[1]],
-    transition_risk_high_threshold = quantile(.data$transition_risk_score,
-      probs = c(1 / 3, 2 / 3),
-      na.rm = TRUE
-    )[[2]],
-    .by = all_of(.by)
+    transition_risk_low_threshold = quantile_distribute(.data$transition_risk_score, 1),
+    transition_risk_high_threshold = quantile_distribute(.data$transition_risk_score, 2),
+    .by = "benchmark_tr_score"
   )
+}
+
+quantile_distribute <- function(x, which) {
+  out <- quantile(x, probs = c(1 / 3, 2 / 3), na.rm = TRUE)
+  out[[which]]
 }
 
 polish_reduction_targets <- function(data) {
