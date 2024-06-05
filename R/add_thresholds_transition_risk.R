@@ -31,13 +31,13 @@ add_thresholds_transition_risk <- function(emissions_profile_products,
                                            all_uuids_scenario_sectors,
                                            scenarios) {
   epa_profile_ranking <- epa_compute_profile_ranking(emissions_profile_products) |>
-    polish_profile_ranking()
+    select_crucial_ranking()
 
   spa_reduction_targets <- spa_compute_profile_ranking(
     all_uuids_scenario_sectors,
     scenarios
   ) |>
-    polish_reduction_targets()
+    select_crucial_target()
 
   full_join(
     epa_profile_ranking,
@@ -45,32 +45,49 @@ add_thresholds_transition_risk <- function(emissions_profile_products,
     by = c("activity_uuid_product_uuid"),
     relationship = "many-to-many"
   ) |>
-    create_tr_benchmarks_tr_score("profile_ranking", "reductions") |>
+    add_transition_risk_score("profile_ranking", "reductions") |>
+    add_benchmark_tr_score("profile_ranking", "reductions") |>
     distinct() |>
-    add_low_high_transition_risk_thresholds()
+    add_low_high_transition_risk_thresholds() |>
+    select(-c("scenario", "year"))
 }
 
-#' Calulate `transition_risk_score` and `benchmark_tr_score` columns
+#' Calulate `transition_risk_score` column
 #'
 #' @param data Dataframe.
 #' @param profile_ranking Dataframe column.
 #' @param reduction_targets Dataframe column.
 #' @keywords internal
 #' @export
-create_tr_benchmarks_tr_score <- function(data,
-                                          col_ranking = "profile_ranking",
-                                          col_target = "reductions") {
+add_transition_risk_score <- function(data,
+                                      col_ranking = "profile_ranking",
+                                      col_target = "reductions") {
   mutate(
     data,
     transition_risk_score = ifelse(
       is.na(data[[col_ranking]]) | is.na(data[[col_target]]),
       NA,
       (data[[col_ranking]] + data[[col_target]]) / 2
-    ),
+    )
+  )
+}
+
+#' Calulate `benchmark_tr_score` column
+#'
+#' @param data Dataframe.
+#' @param profile_ranking Dataframe column.
+#' @param reduction_targets Dataframe column.
+#' @keywords internal
+#' @export
+add_benchmark_tr_score <- function(data,
+                                   col_ranking = "profile_ranking",
+                                   col_target = "reductions") {
+  mutate(
+    data,
     benchmark_tr_score = ifelse(
       is.na(data[[col_ranking]]) | is.na(data[[col_target]]),
       NA,
-      paste(.data$scenario_year, .data$grouped_by, sep = "_")
+      paste(.data$scenario, .data$year, .data$grouped_by, sep = "_")
     )
   )
 }
@@ -88,14 +105,12 @@ quantile_distribute <- function(x, which) {
   out[[which]]
 }
 
-polish_reduction_targets <- function(data) {
+select_crucial_target <- function(data) {
   data |>
-    select(c("activity_uuid_product_uuid", "scenario", "year", "reductions")) |>
-    mutate(scenario_year = paste(.data$scenario, .data$year, sep = "_")) |>
-    select(-c("scenario", "year"))
+    select(c("activity_uuid_product_uuid", "scenario", "year", "reductions"))
 }
 
-polish_profile_ranking <- function(data) {
+select_crucial_ranking <- function(data) {
   data |>
     select(c("activity_uuid_product_uuid", "grouped_by", "profile_ranking"))
 }
