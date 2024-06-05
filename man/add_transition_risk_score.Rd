@@ -6,8 +6,8 @@
 \usage{
 add_transition_risk_score(
   data,
-  col_ranking = "profile_ranking",
-  col_target = "reductions"
+  col_ranking = col_ranking(),
+  col_target = col_targets()
 )
 }
 \arguments{

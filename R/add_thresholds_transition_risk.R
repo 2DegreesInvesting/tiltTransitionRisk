@@ -30,6 +30,16 @@
 add_thresholds_transition_risk <- function(emissions_profile_products,
                                            all_uuids_scenario_sectors,
                                            scenarios) {
+  check_crucial_cols(emissions_profile_products, c(col_uuid(), col_co2_footprint()))
+  check_crucial_cols(all_uuids_scenario_sectors, c(
+    col_uuid(), col_type(),
+    col_sector(), col_subsector()
+  ))
+  check_crucial_cols(scenarios, c(
+    col_type(), col_sector(), col_subsector(),
+    col_year(), col_scenario(), col_targets()
+  ))
+
   epa_profile_ranking <- epa_compute_profile_ranking(emissions_profile_products) |>
     select_crucial_ranking()
 
@@ -42,14 +52,14 @@ add_thresholds_transition_risk <- function(emissions_profile_products,
   full_join(
     epa_profile_ranking,
     spa_reduction_targets,
-    by = c("activity_uuid_product_uuid"),
+    by = col_uuid(),
     relationship = "many-to-many"
   ) |>
-    add_transition_risk_score("profile_ranking", "reductions") |>
-    add_benchmark_tr_score("profile_ranking", "reductions") |>
+    add_transition_risk_score(col_ranking(), col_targets()) |>
+    add_benchmark_tr_score(col_ranking(), col_targets()) |>
     distinct() |>
     add_low_high_transition_risk_thresholds() |>
-    select(-c("scenario", "year"))
+    select(-c(col_scenario(), col_year()))
 }
 
 #' Calulate `transition_risk_score` column
@@ -60,8 +70,8 @@ add_thresholds_transition_risk <- function(emissions_profile_products,
 #' @keywords internal
 #' @export
 add_transition_risk_score <- function(data,
-                                      col_ranking = "profile_ranking",
-                                      col_target = "reductions") {
+                                      col_ranking = col_ranking(),
+                                      col_target = col_targets()) {
   mutate(
     data,
     transition_risk_score = ifelse(
@@ -80,8 +90,8 @@ add_transition_risk_score <- function(data,
 #' @keywords internal
 #' @export
 add_benchmark_tr_score <- function(data,
-                                   col_ranking = "profile_ranking",
-                                   col_target = "reductions") {
+                                   col_ranking = col_ranking(),
+                                   col_target = col_targets()) {
   mutate(
     data,
     benchmark_tr_score = ifelse(
@@ -92,7 +102,7 @@ add_benchmark_tr_score <- function(data,
   )
 }
 
-add_low_high_transition_risk_thresholds <- function(data, .by) {
+add_low_high_transition_risk_thresholds <- function(data) {
   mutate(data,
     transition_risk_low_threshold = quantile_distribute(.data$transition_risk_score, 1),
     transition_risk_high_threshold = quantile_distribute(.data$transition_risk_score, 2),
@@ -107,10 +117,14 @@ quantile_distribute <- function(x, which) {
 
 select_crucial_target <- function(data) {
   data |>
-    select(c("activity_uuid_product_uuid", "scenario", "year", "reductions"))
+    select(c(col_uuid(), col_scenario(), col_year(), col_targets()))
 }
 
 select_crucial_ranking <- function(data) {
   data |>
-    select(c("activity_uuid_product_uuid", "grouped_by", "profile_ranking"))
+    select(c(col_uuid(), "grouped_by", col_ranking()))
+}
+
+check_crucial_cols <- function(data, crucial_cols) {
+  walk(crucial_cols, ~ check_matches_name(data, .x))
 }
