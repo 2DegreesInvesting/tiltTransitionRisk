@@ -25,6 +25,7 @@ Imports:
     stats,
     tibble,
     tiltIndicator (>= 0.0.0.9223),
+    tiltIndicatorAfter,
     tiltToyData (>= 0.0.0.9204),
     utils
 Remotes: 
