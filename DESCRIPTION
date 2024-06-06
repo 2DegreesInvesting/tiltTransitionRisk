@@ -23,8 +23,10 @@ Imports:
     readr,
     rlang,
     stats,
+    tibble,
     tiltIndicator (>= 0.0.0.9223),
-    tiltToyData (>= 0.0.0.9204)
+    tiltToyData (>= 0.0.0.9204),
+    utils
 Remotes: 
     2degreesinvesting/tiltToyData,
     2DegreesInvesting/tiltIndicator

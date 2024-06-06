@@ -30,9 +30,7 @@ library(dplyr)
 options(readr.show_col_types = FALSE)
 
 emissions_profile_products <- read_csv(toy_emissions_profile_products_ecoinvent())
-all_uuids_scenario_sectors <- read_csv(toy_sector_profile_companies()) |>
-  select(-c("companies_id", "company_name", "clustered")) |>
-  distinct()
+all_uuids_scenario_sectors <- read_csv(toy_all_uuids_scenario_sectors())
 scenarios <- read_csv(toy_sector_profile_any_scenarios())
 
 output <- add_thresholds_transition_risk(

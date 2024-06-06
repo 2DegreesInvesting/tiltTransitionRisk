@@ -16,9 +16,7 @@
 #' options(readr.show_col_types = FALSE)
 #'
 #' emissions_profile_products <- read_csv(toy_emissions_profile_products_ecoinvent())
-#' all_uuids_scenario_sectors <- read_csv(toy_sector_profile_companies()) |>
-#'   select(-c("companies_id", "company_name", "clustered")) |>
-#'   distinct()
+#' all_uuids_scenario_sectors <- read_csv(toy_all_uuids_scenario_sectors())
 #' scenarios <- read_csv(toy_sector_profile_any_scenarios())
 #'
 #' output <- add_thresholds_transition_risk(
@@ -75,9 +73,9 @@ add_transition_risk_score <- function(data,
   mutate(
     data,
     transition_risk_score = ifelse(
-      is.na(data[[col_ranking]]) | is.na(data[[col_target]]),
+      is.na(.data[[col_ranking]]) | is.na(.data[[col_target]]),
       NA,
-      (data[[col_ranking]] + data[[col_target]]) / 2
+      (.data[[col_ranking]] + .data[[col_target]]) / 2
     )
   )
 }
@@ -95,7 +93,7 @@ add_benchmark_tr_score <- function(data,
   mutate(
     data,
     benchmark_tr_score = ifelse(
-      is.na(data[[col_ranking]]) | is.na(data[[col_target]]),
+      is.na(.data[[col_ranking]]) | is.na(.data[[col_target]]),
       NA,
       paste(.data$scenario, .data$year, .data$grouped_by, sep = "_")
     )
@@ -116,13 +114,11 @@ quantile_distribute <- function(x, which) {
 }
 
 select_crucial_target <- function(data) {
-  data |>
-    select(c(col_uuid(), col_scenario(), col_year(), col_targets()))
+  select(data, all_of(c(col_uuid(), col_scenario(), col_year(), col_targets())))
 }
 
 select_crucial_ranking <- function(data) {
-  data |>
-    select(c(col_uuid(), "grouped_by", col_ranking()))
+  select(data, all_of(c(col_uuid(), "grouped_by", col_ranking())))
 }
 
 check_crucial_cols <- function(data, crucial_cols) {
