@@ -25,9 +25,10 @@ Imports:
     stats,
     tibble,
     tiltIndicator (>= 0.0.0.9223),
-    tiltIndicatorAfter,
+    tiltIndicatorAfter (>= 0.0.0.9039),
     tiltToyData (>= 0.0.0.9204),
     utils
-Remotes: 
+Remotes:  
     2degreesinvesting/tiltToyData,
-    2DegreesInvesting/tiltIndicator
+    2DegreesInvesting/tiltIndicator,
+    2degreesinvesting/tiltIndicatorAfter
