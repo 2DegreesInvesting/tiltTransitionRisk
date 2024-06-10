@@ -15,6 +15,7 @@
 #' @importFrom rlang abort
 #' @importFrom stats quantile
 #' @importFrom tibble tribble
+#' @importFrom tiltIndicator categorize_risk
 #' @importFrom tiltIndicator epa_compute_profile_ranking
 #' @importFrom tiltIndicator spa_compute_profile_ranking
 #' @importFrom tiltToyData toy_emissions_profile_products_ecoinvent
