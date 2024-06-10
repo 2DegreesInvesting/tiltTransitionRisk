@@ -33,3 +33,15 @@ col_targets <- function() {
 col_ranking <- function() {
   "profile_ranking"
 }
+
+col_transition_risk_score <- function() {
+  "transition_risk_score"
+}
+
+col_tr_low_threshold <- function() {
+  "transition_risk_low_threshold"
+}
+
+col_tr_high_threshold <- function() {
+  "transition_risk_high_threshold"
+}
