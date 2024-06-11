@@ -4,16 +4,12 @@
 \alias{add_thresholds_transition_risk}
 \title{Adds low and high thresholds for transition risk score}
 \usage{
-add_thresholds_transition_risk(
-  emissions_profile_products,
-  all_uuids_scenario_sectors,
-  scenarios
-)
+add_thresholds_transition_risk(co2, all_activities_scenario_sectors, scenarios)
 }
 \arguments{
-\item{emissions_profile_products}{A dataframe}
+\item{co2}{A dataframe}
 
-\item{all_uuids_scenario_sectors}{A dataframe}
+\item{all_activities_scenario_sectors}{A dataframe}
 
 \item{scenarios}{A dataframe}
 }
@@ -29,13 +25,13 @@ library(readr)
 library(dplyr)
 options(readr.show_col_types = FALSE)
 
-emissions_profile_products <- read_csv(toy_emissions_profile_products_ecoinvent())
-all_uuids_scenario_sectors <- read_csv(toy_all_uuids_scenario_sectors())
+co2 <- read_csv(toy_emissions_profile_products_ecoinvent())
+all_activities_scenario_sectors <- read_csv(toy_all_uuids_scenario_sectors())
 scenarios <- read_csv(toy_sector_profile_any_scenarios())
 
 output <- add_thresholds_transition_risk(
-  emissions_profile_products,
-  all_uuids_scenario_sectors,
+  co2,
+  all_activities_scenario_sectors,
   scenarios
 )
 output

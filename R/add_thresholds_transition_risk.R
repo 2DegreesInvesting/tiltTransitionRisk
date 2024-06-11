@@ -1,7 +1,7 @@
 #' Adds low and high thresholds for transition risk score
 #'
-#' @param emissions_profile_products A dataframe
-#' @param all_uuids_scenario_sectors A dataframe
+#' @param co2 A dataframe
+#' @param all_activities_scenario_sectors A dataframe
 #' @param scenarios A dataframe
 #'
 #' @keywords internal
@@ -15,21 +15,21 @@
 #' library(dplyr)
 #' options(readr.show_col_types = FALSE)
 #'
-#' emissions_profile_products <- read_csv(toy_emissions_profile_products_ecoinvent())
-#' all_uuids_scenario_sectors <- read_csv(toy_all_uuids_scenario_sectors())
+#' co2 <- read_csv(toy_emissions_profile_products_ecoinvent())
+#' all_activities_scenario_sectors <- read_csv(toy_all_uuids_scenario_sectors())
 #' scenarios <- read_csv(toy_sector_profile_any_scenarios())
 #'
 #' output <- add_thresholds_transition_risk(
-#'   emissions_profile_products,
-#'   all_uuids_scenario_sectors,
+#'   co2,
+#'   all_activities_scenario_sectors,
 #'   scenarios
 #' )
 #' output
-add_thresholds_transition_risk <- function(emissions_profile_products,
-                                           all_uuids_scenario_sectors,
+add_thresholds_transition_risk <- function(co2,
+                                           all_activities_scenario_sectors,
                                            scenarios) {
-  check_crucial_cols(emissions_profile_products, c(col_uuid(), col_co2_footprint()))
-  check_crucial_cols(all_uuids_scenario_sectors, c(
+  check_crucial_cols(co2, c(col_uuid(), col_co2_footprint()))
+  check_crucial_cols(all_activities_scenario_sectors, c(
     col_uuid(), col_type(),
     col_sector(), col_subsector()
   ))
@@ -38,11 +38,11 @@ add_thresholds_transition_risk <- function(emissions_profile_products,
     col_year(), col_scenario(), col_targets()
   ))
 
-  epa_profile_ranking <- epa_compute_profile_ranking(emissions_profile_products) |>
+  epa_profile_ranking <- epa_compute_profile_ranking(co2) |>
     select_crucial_ranking()
 
   spa_reduction_targets <- spa_compute_profile_ranking(
-    all_uuids_scenario_sectors,
+    all_activities_scenario_sectors,
     scenarios
   ) |>
     select_crucial_target()
