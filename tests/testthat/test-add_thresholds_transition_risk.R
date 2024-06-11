@@ -1,7 +1,7 @@
 test_that("outputs `NA` tranistion risk thresholds for `NA` transition risk score", {
   co2 <- read_csv(toy_emissions_profile_products_ecoinvent()) |>
     filter(activity_uuid_product_uuid != "76269c17-78d6-420b-991a-aa38c51b45b7")
-  all_activities_scenario_sectors <- read_csv(toy_all_uuids_scenario_sectors()) |>
+  all_activities_scenario_sectors <- read_csv(toy_all_activities_scenario_sectors()) |>
     filter(activity_uuid_product_uuid == "76269c17-78d6-420b-991a-aa38c51b45b7")
   scenarios <- read_csv(toy_sector_profile_any_scenarios())
 
@@ -21,7 +21,7 @@ test_that("outputs `NA` tranistion risk thresholds for `NA` transition risk scor
 
 test_that("low and high tranistion risk thresholds distribute all activities in three equal parts for each benchmark", {
   co2 <- read_csv(toy_emissions_profile_products_ecoinvent())
-  all_activities_scenario_sectors <- read_csv(toy_all_uuids_scenario_sectors())
+  all_activities_scenario_sectors <- read_csv(toy_all_activities_scenario_sectors())
   scenarios <- read_csv(toy_sector_profile_any_scenarios())
 
   output <- add_thresholds_transition_risk(
@@ -44,7 +44,7 @@ test_that("low and high tranistion risk thresholds distribute all activities in 
 
 test_that("if `co2` lacks crucial columns, errors gracefully", {
   co2 <- read_csv(toy_emissions_profile_products_ecoinvent())
-  all_activities_scenario_sectors <- read_csv(toy_all_uuids_scenario_sectors())
+  all_activities_scenario_sectors <- read_csv(toy_all_activities_scenario_sectors())
   scenarios <- read_csv(toy_sector_profile_any_scenarios())
 
   crucial <- col_uuid()
@@ -58,7 +58,7 @@ test_that("if `co2` lacks crucial columns, errors gracefully", {
 
 test_that("if `all_activities_scenario_sectors` lacks crucial columns, errors gracefully", {
   co2 <- read_csv(toy_emissions_profile_products_ecoinvent())
-  all_activities_scenario_sectors <- read_csv(toy_all_uuids_scenario_sectors())
+  all_activities_scenario_sectors <- read_csv(toy_all_activities_scenario_sectors())
   scenarios <- read_csv(toy_sector_profile_any_scenarios())
 
   crucial <- col_uuid()
@@ -80,7 +80,7 @@ test_that("if `all_activities_scenario_sectors` lacks crucial columns, errors gr
 
 test_that("if `scenarios` lacks crucial columns, errors gracefully", {
   co2 <- read_csv(toy_emissions_profile_products_ecoinvent())
-  all_activities_scenario_sectors <- read_csv(toy_all_uuids_scenario_sectors())
+  all_activities_scenario_sectors <- read_csv(toy_all_activities_scenario_sectors())
   scenarios <- read_csv(toy_sector_profile_any_scenarios())
 
   crucial <- col_type()
