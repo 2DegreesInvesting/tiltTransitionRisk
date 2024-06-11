@@ -51,20 +51,16 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_thresholds_transition_risk</span><span class="op">(</span></span>
-<span>  <span class="va">emissions_profile_products</span>,</span>
-<span>  <span class="va">all_uuids_scenario_sectors</span>,</span>
-<span>  <span class="va">scenarios</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_thresholds_transition_risk</span><span class="op">(</span><span class="va">co2</span>, <span class="va">all_activities_scenario_sectors</span>, <span class="va">scenarios</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>emissions_profile_products</dt>
+    <dl><dt>co2</dt>
 <dd><p>A dataframe</p></dd>
 
 
-<dt>all_uuids_scenario_sectors</dt>
+<dt>all_activities_scenario_sectors</dt>
 <dd><p>A dataframe</p></dd>
 
 
@@ -94,13 +90,13 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     intersect, setdiff, setequal, union</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>readr.show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">emissions_profile_products</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://2degreesinvesting.github.io/tiltToyData/reference/toy_files.html" class="external-link">toy_emissions_profile_products_ecoinvent</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">all_uuids_scenario_sectors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="fu"><a href="toy_all_uuids_scenario_sectors.html">toy_all_uuids_scenario_sectors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">co2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://2degreesinvesting.github.io/tiltToyData/reference/toy_files.html" class="external-link">toy_emissions_profile_products_ecoinvent</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">all_activities_scenario_sectors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="fu"><a href="toy_all_uuids_scenario_sectors.html">toy_all_uuids_scenario_sectors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">scenarios</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://2degreesinvesting.github.io/tiltToyData/reference/toy_files.html" class="external-link">toy_sector_profile_any_scenarios</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">output</span> <span class="op">&lt;-</span> <span class="fu">add_thresholds_transition_risk</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">emissions_profile_products</span>,</span></span>
-<span class="r-in"><span>  <span class="va">all_uuids_scenario_sectors</span>,</span></span>
+<span class="r-in"><span>  <span class="va">co2</span>,</span></span>
+<span class="r-in"><span>  <span class="va">all_activities_scenario_sectors</span>,</span></span>
 <span class="r-in"><span>  <span class="va">scenarios</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">output</span></span></span>
