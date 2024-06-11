@@ -16,7 +16,7 @@
 #' options(readr.show_col_types = FALSE)
 #'
 #' co2 <- read_csv(toy_emissions_profile_products_ecoinvent())
-#' all_activities_scenario_sectors <- read_csv(toy_all_uuids_scenario_sectors())
+#' all_activities_scenario_sectors <- read_csv(toy_all_activities_scenario_sectors())
 #' scenarios <- read_csv(toy_sector_profile_any_scenarios())
 #'
 #' output <- add_thresholds_transition_risk(

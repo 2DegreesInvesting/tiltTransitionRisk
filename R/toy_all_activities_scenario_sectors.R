@@ -1,8 +1,8 @@
-#' Adds toy data for `all_uuids_scenario_sectors`
+#' Adds toy data for `all_activities_scenario_sectors`
 #'
 #' @keywords internal
 #' @export
-toy_all_uuids_scenario_sectors <- function() {
+toy_all_activities_scenario_sectors <- function() {
   # Created with
   # readr::read_csv(tiltToyData::toy_sector_profile_companies()) |>
   #   dplyr::select(-c("companies_id", "company_name", "clustered")) |>
