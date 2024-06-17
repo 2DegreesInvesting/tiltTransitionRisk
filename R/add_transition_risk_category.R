@@ -33,7 +33,7 @@ add_transition_risk_category <- function(data) {
 
   mutate(data, transition_risk_category = ifelse(
     is.na(.data[[col_transition_risk_score()]]),
-    NA,
+    NA_character_,
     categorize_risk(
       .data[[col_transition_risk_score()]],
       .data[[col_tr_low_threshold()]],
