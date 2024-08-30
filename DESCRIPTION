@@ -1,21 +1,21 @@
 Package: tiltTransitionRisk
 Title: Transition Risk
 Version: 0.0.0.9003
-Authors@R: 
-    person("Mauro", "Lepore", , "maurolepore@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "https://orcid.org/0000-0002-1986-7988"))
+Authors@R: c(
+    person("Kalash", "Singhal", , "kalash@2degrees-investing.org", role = c("aut", "cre")),
+    person("Mauro", "Lepore", , "maurolepore@gmail.com", role = "aut",
+           comment = c(ORCID = "https://orcid.org/0000-0002-1986-7988")),
+    person("Anne", "Schoenauer", , "anne.schoenauer@2degrees-investing.org", role = "aut",
+           comment = c(ORCID = "https://orcid.org/0000-0002-4576-8799")),
+    person("Tilman", "Trompke", , "tilman@2degrees-investing.org", role = "aut",
+           comment = c(ORCID = "https://orcid.org/0009-0003-3351-5131")),
+    person("2 Degrees Investing Initiative", , , "contact@2degrees-investing.org", role = c("cph", "fnd"))
+  )
 Description: Transition risk.
 License: GPL (>= 3)
 URL: https://github.com/2DegreesInvesting/tiltTransitionRisk,
     https://2degreesinvesting.github.io/tiltTransitionRisk/
 BugReports: https://github.com/2DegreesInvesting/tiltTransitionRisk/issues
-Suggests: 
-    testthat (>= 3.0.0),
-    withr
-Config/testthat/edition: 3
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
 Imports: 
     dplyr,
     glue,
@@ -27,6 +27,13 @@ Imports:
     tiltIndicator (>= 0.0.0.9223),
     tiltToyData (>= 0.0.0.9204),
     utils
+Suggests: 
+    testthat (>= 3.0.0),
+    withr
 Remotes: 
-    2degreesinvesting/tiltToyData,
-    2DegreesInvesting/tiltIndicator
+    2DegreesInvesting/tiltIndicator,
+    2degreesinvesting/tiltToyData
+Config/testthat/edition: 3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
