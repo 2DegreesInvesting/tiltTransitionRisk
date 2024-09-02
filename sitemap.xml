@@ -1,39 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://2degreesinvesting.github.io/tiltTransitionRisk/404.html</loc>
-  </url>
-  <url>
-    <loc>https://2degreesinvesting.github.io/tiltTransitionRisk/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://2degreesinvesting.github.io/tiltTransitionRisk/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://2degreesinvesting.github.io/tiltTransitionRisk/index.html</loc>
-  </url>
-  <url>
-    <loc>https://2degreesinvesting.github.io/tiltTransitionRisk/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://2degreesinvesting.github.io/tiltTransitionRisk/reference/add_benchmark_tr_score.html</loc>
-  </url>
-  <url>
-    <loc>https://2degreesinvesting.github.io/tiltTransitionRisk/reference/add_thresholds_transition_risk.html</loc>
-  </url>
-  <url>
-    <loc>https://2degreesinvesting.github.io/tiltTransitionRisk/reference/add_transition_risk_category.html</loc>
-  </url>
-  <url>
-    <loc>https://2degreesinvesting.github.io/tiltTransitionRisk/reference/add_transition_risk_score.html</loc>
-  </url>
-  <url>
-    <loc>https://2degreesinvesting.github.io/tiltTransitionRisk/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://2degreesinvesting.github.io/tiltTransitionRisk/reference/tiltTransitionRisk-package.html</loc>
-  </url>
-  <url>
-    <loc>https://2degreesinvesting.github.io/tiltTransitionRisk/reference/toy_all_activities_scenario_sectors.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://2degreesinvesting.github.io/tiltTransitionRisk/404.html</loc></url>
+<url><loc>https://2degreesinvesting.github.io/tiltTransitionRisk/LICENSE.html</loc></url>
+<url><loc>https://2degreesinvesting.github.io/tiltTransitionRisk/authors.html</loc></url>
+<url><loc>https://2degreesinvesting.github.io/tiltTransitionRisk/index.html</loc></url>
+<url><loc>https://2degreesinvesting.github.io/tiltTransitionRisk/news/index.html</loc></url>
+<url><loc>https://2degreesinvesting.github.io/tiltTransitionRisk/reference/add_benchmark_tr_score.html</loc></url>
+<url><loc>https://2degreesinvesting.github.io/tiltTransitionRisk/reference/add_thresholds_transition_risk.html</loc></url>
+<url><loc>https://2degreesinvesting.github.io/tiltTransitionRisk/reference/add_transition_risk_category.html</loc></url>
+<url><loc>https://2degreesinvesting.github.io/tiltTransitionRisk/reference/add_transition_risk_score.html</loc></url>
+<url><loc>https://2degreesinvesting.github.io/tiltTransitionRisk/reference/index.html</loc></url>
+<url><loc>https://2degreesinvesting.github.io/tiltTransitionRisk/reference/tiltTransitionRisk-package.html</loc></url>
+<url><loc>https://2degreesinvesting.github.io/tiltTransitionRisk/reference/toy_all_activities_scenario_sectors.html</loc></url>
 </urlset>
+
