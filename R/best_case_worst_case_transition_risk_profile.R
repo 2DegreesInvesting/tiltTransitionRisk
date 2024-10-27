@@ -19,3 +19,12 @@ best_case_worst_case_transition_risk_profile <- function(data) {
 
   )
 }
+
+polish_best_case_worst_case_transition_risk_profile <- function(data) {
+  data |>
+    rename_with_prefix("transition_risk_profile_", match = c(
+      "^best_case$",
+      "^worst_case$",
+      "^equal_weight$"
+    ))
+}
