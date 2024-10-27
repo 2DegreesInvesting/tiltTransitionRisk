@@ -50,7 +50,3 @@ add_case_col_if_rank_col_match <- function(data,
       .data[[as_name(ensym(case_col))]]
     ))
 }
-
-check_crucial_cols <- function(data, crucial_cols) {
-  walk(crucial_cols, ~ check_matches_name(data, .x))
-}

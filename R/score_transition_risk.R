@@ -70,7 +70,11 @@ score_transition_risk <-
 
     trs_product <-
       full_join_emmissions_sector(trs_emissions, trs_sector) |>
-      create_tr_benchmarks_tr_score() |>
+      add_transition_risk_score(
+        col_ranking = col_ranking(),
+        col_target = "reduction_targets"
+      ) |>
+      create_benchmarks_tr_score() |>
       limit_transition_risk_score_between_0_and_1() |>
       select(-all_of(c("scenario_year", "benchmark"))) |>
       left_join(
@@ -96,14 +100,9 @@ score_transition_risk <-
     nest_levels(trs_product, trs_company)
   }
 
-create_tr_benchmarks_tr_score <- function(data) {
+create_benchmarks_tr_score <- function(data) {
   mutate(
     data,
-    transition_risk_score = ifelse(
-      is.na(.data$profile_ranking) | is.na(.data$reduction_targets),
-      NA,
-      (.data$profile_ranking + .data$reduction_targets) / 2
-    ),
     benchmark_tr_score = ifelse(
       is.na(.data$profile_ranking) | is.na(.data$reduction_targets),
       NA,
