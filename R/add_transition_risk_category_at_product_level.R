@@ -23,9 +23,9 @@
 #'   scenarios
 #' )
 #'
-#' output <- add_transition_risk_category(transition_risk_thresholds)
+#' output <- add_transition_risk_category_at_product_level(transition_risk_thresholds)
 #' output
-add_transition_risk_category <- function(data) {
+add_transition_risk_category_at_product_level <- function(data) {
   check_crucial_cols(data, c(
     col_transition_risk_score(), col_tr_low_threshold(),
     col_tr_high_threshold()

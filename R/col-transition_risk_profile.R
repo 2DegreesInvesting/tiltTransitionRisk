@@ -18,14 +18,6 @@ col_subsector <- function() {
   "subsector"
 }
 
-col_year <- function() {
-  "year"
-}
-
-col_scenario <- function() {
-  "scenario"
-}
-
 col_targets <- function() {
   "reductions"
 }
