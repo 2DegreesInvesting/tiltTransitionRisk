@@ -11,15 +11,15 @@ test_that("if input data lacks crucial columns, errors gracefully", {
 
   crucial <- col_transition_risk_score()
   bad <- select(input_data, -all_of(crucial))
-  expect_error(add_transition_risk_category(bad), crucial)
+  expect_error(add_transition_risk_category_at_product_level(bad), crucial)
 
   crucial <- col_tr_low_threshold()
   bad <- select(input_data, -all_of(crucial))
-  expect_error(add_transition_risk_category(bad), crucial)
+  expect_error(add_transition_risk_category_at_product_level(bad), crucial)
 
   crucial <- col_tr_high_threshold()
   bad <- select(input_data, -all_of(crucial))
-  expect_error(add_transition_risk_category(bad), crucial)
+  expect_error(add_transition_risk_category_at_product_level(bad), crucial)
 })
 
 test_that("if `transition_risk_category` column has only NAs, then class of the column is `character`", {
@@ -34,7 +34,7 @@ test_that("if `transition_risk_category` column has only NAs, then class of the 
     all_activities_scenario_sectors,
     scenarios
   ) |>
-    add_transition_risk_category()
+    add_transition_risk_category_at_product_level()
 
   expected_class <- "character"
   expect_equal(class(output$transition_risk_category), expected_class)

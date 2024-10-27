@@ -2,7 +2,7 @@
 
 export(add_benchmark_tr_score)
 export(add_thresholds_transition_risk)
-export(add_transition_risk_category)
+export(add_transition_risk_category_at_product_level)
 export(add_transition_risk_score)
 export(best_case_worst_case_transition_risk_profile)
 export(example_emissions_profile_at_product_level)

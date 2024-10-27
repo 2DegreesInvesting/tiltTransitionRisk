@@ -129,7 +129,7 @@ transition_risk_profile_impl <- function(emissions_profile,
       "benchmark_tr_score",
       "activity_uuid_product_uuid"
     )) |>
-    add_transition_risk_category() |>
+    add_transition_risk_category_at_product_level() |>
     best_case_worst_case_transition_risk_profile() |>
     polish_best_case_worst_case() |>
     polish_best_case_worst_case_transition_risk_profile()
