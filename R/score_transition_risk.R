@@ -14,6 +14,8 @@
 #' library(dplyr)
 #' library(readr, warn.conflicts = FALSE)
 #' library(tiltToyData)
+#' library(tiltIndicator)
+#' library(tiltIndicatorAfter)
 #'
 #' restore <- options(readr.show_col_types = FALSE)
 #'

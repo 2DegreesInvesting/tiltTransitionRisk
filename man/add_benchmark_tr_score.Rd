@@ -13,9 +13,9 @@ add_benchmark_tr_score(
 \arguments{
 \item{data}{Dataframe.}
 
-\item{profile_ranking}{Dataframe column.}
+\item{col_ranking}{Dataframe column.}
 
-\item{reduction_targets}{Dataframe column.}
+\item{col_target}{Dataframe column.}
 }
 \description{
 Calulate \code{benchmark_tr_score} column

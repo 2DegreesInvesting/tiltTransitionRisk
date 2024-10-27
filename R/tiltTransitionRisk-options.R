@@ -18,6 +18,7 @@
 #' library(withr)
 #' library(tiltToyData)
 #' library(tiltIndicator)
+#' library(tiltIndicatorAfter)
 #'
 #' set.seed(1)
 #'

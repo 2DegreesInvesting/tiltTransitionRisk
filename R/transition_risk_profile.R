@@ -23,7 +23,8 @@
 #' library(readr, warn.conflicts = FALSE)
 #' library(dplyr, warn.conflicts = FALSE)
 #' library(tiltToyData, warn.conflicts = FALSE)
-#' library(tiltTransitionRisk, warn.conflicts = FALSE)
+#' library(tiltIndicator)
+#' library(tiltIndicatorAfter)
 #'
 #' set.seed(123)
 #' restore <- options(list(

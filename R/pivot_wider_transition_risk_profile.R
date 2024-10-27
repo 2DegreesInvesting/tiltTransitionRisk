@@ -2,7 +2,7 @@
 #'
 #' @param include_co2 Logical. Include `co2_*` columns ?
 #'
-#' @return `r document_tilt_profile()`
+#' @return A Dataframe
 #' @export
 #' @keywords internal
 #'
@@ -11,7 +11,8 @@
 #' library(readr, warn.conflicts = FALSE)
 #' library(dplyr, warn.conflicts = FALSE)
 #' library(tiltToyData, warn.conflicts = FALSE)
-#' library(tiltTransitionRisk, warn.conflicts = FALSE)
+#' library(tiltIndicator)
+#' library(tiltIndicatorAfter)
 #'
 #' restore <- options(list(
 #'   readr.show_col_types = FALSE,

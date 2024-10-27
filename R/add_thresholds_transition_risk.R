@@ -63,8 +63,8 @@ add_thresholds_transition_risk <- function(co2,
 #' Calulate `transition_risk_score` column
 #'
 #' @param data Dataframe.
-#' @param profile_ranking Dataframe column.
-#' @param reduction_targets Dataframe column.
+#' @param col_ranking Dataframe column.
+#' @param col_target Dataframe column.
 #' @keywords internal
 #' @export
 add_transition_risk_score <- function(data,
@@ -83,8 +83,8 @@ add_transition_risk_score <- function(data,
 #' Calulate `benchmark_tr_score` column
 #'
 #' @param data Dataframe.
-#' @param profile_ranking Dataframe column.
-#' @param reduction_targets Dataframe column.
+#' @param col_ranking Dataframe column.
+#' @param col_target Dataframe column.
 #' @keywords internal
 #' @export
 add_benchmark_tr_score <- function(data,
