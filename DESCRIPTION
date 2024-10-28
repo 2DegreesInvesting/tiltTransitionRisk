@@ -1,6 +1,6 @@
 Package: tiltTransitionRisk
 Title: Transition Risk
-Version: 0.0.0.9003
+Version: 0.0.0.9004
 Authors@R: c(
     person("Kalash", "Singhal", , "kalash@2degrees-investing.org", role = c("aut", "cre")),
     person("Mauro", "Lepore", , "maurolepore@gmail.com", role = "aut",
@@ -34,7 +34,7 @@ Imports:
     withr
 Suggests: 
     testthat (>= 3.0.0)
-Remotes:  
+Remotes: 
     2DegreesInvesting/tiltIndicator,
     2degreesinvesting/tiltToyData,
     2degreesinvesting/tiltIndicatorAfter,

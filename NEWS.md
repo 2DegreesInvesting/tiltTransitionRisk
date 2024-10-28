@@ -1,4 +1,8 @@
-<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
+<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+
+# tiltTransitionRisk 0.0.0.9004 (2024-10-28)
+
+* Add Transition risk code from `tiltIndicatorAfter` repository (#24).
 
 # tiltTransitionRisk 0.0.0.9003 (2024-06-10)
 
