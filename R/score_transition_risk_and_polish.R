@@ -134,7 +134,7 @@ score_transition_risk_and_polish <- function(emissions_profile,
     ))
 
   out_product <- select_emissions_profile_product |>
-    left_join(
+    full_join(
       select_sector_profile_product,
       relationship = "many-to-many",
       by = c("companies_id", "ep_product"),
@@ -148,7 +148,7 @@ score_transition_risk_and_polish <- function(emissions_profile,
       NA_character_,
       paste(.data$scenario, .data$year, .data$benchmark, sep = "_")
     )) |>
-    left_join(
+    full_join(
       select_transition_risk_score_product,
       by = c("companies_id", "ep_product", "benchmark_tr_score"),
       relationship = "many-to-many"
