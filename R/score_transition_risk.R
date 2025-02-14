@@ -83,7 +83,11 @@ score_transition_risk <- function(emissions_profile,
     get_rows_union_for_common_cols(
       emissions_profile_at_product_level,
       sector_profile_at_product_level
-    )
+    ) |>
+    group_by(across(-c("tilt_sector", "tilt_subsector", "isic_4digit"))) |>
+    filter(!(is.na(.data$tilt_sector) & is.na(.data$tilt_subsector) & is.na(.data$isic_4digit) & n() > 1)) |>
+    ungroup()
+
   trs_emissions <-
     prepare_trs_emissions(emissions_profile_at_product_level, include_co2)
   trs_sector <-
@@ -102,37 +106,34 @@ score_transition_risk <- function(emissions_profile,
       by = c("companies_id", "ep_product", "activity_uuid_product_uuid"),
       relationship = "many-to-many"
     ) |>
-    relocate(
-      relocate_trs_columns(product_level_trs_column()),
-      "profile_ranking",
-      "reduction_targets"
-    ) |>
+    relocate(relocate_trs_columns_product(include_co2)) |>
     distinct()
 
   emissions_profile_at_company_level <- unnest_company(emissions_profile) |>
-    select(
-      c("companies_id",
-        "benchmark",
-        "emission_profile",
-        "emission_profile_share",
-        "profile_ranking_avg",
-        if (include_co2) "co2_avg"
-      )
-    )
+    select(c(
+      "companies_id",
+      "benchmark",
+      "emission_profile",
+      "emission_profile_share",
+      "profile_ranking_avg",
+      if (include_co2) "co2_avg"
+    ))
 
   sector_profile_at_company_level <- unnest_company(sector_profile) |>
-    select(c("companies_id",
-             "sector_profile",
-             "sector_profile_share",
-             "scenario",
-             "year",
-             "reduction_targets_avg"))
+    select(c(
+      "companies_id",
+      "sector_profile",
+      "sector_profile_share",
+      "scenario",
+      "year",
+      "reduction_targets_avg"
+    ))
 
   trs_company <- trs_product |>
     select(common_columns_emissions_sector_at_company_level(), "benchmark_tr_score", product_level_trs_column()) |>
     distinct() |>
     create_trs_average() |>
-    select(-product_level_trs_column()) |>
+    select(-product_level_trs_column(), -c("benchmark_tr_score")) |>
     left_join(
       emissions_profile_at_company_level,
       relationship = "many-to-many",
@@ -143,8 +144,8 @@ score_transition_risk <- function(emissions_profile,
       relationship = "many-to-many",
       by = c("companies_id")
     ) |>
-    relocate(relocate_trs_columns(company_level_trs_avg_column())) |>
-    rename(benchmark_tr_score_avg = "benchmark_tr_score") |>
+    add_benchmark_tr_score_avg() |>
+    relocate(relocate_trs_columns_company(include_co2)) |>
     distinct()
 
   nest_levels(trs_product, trs_company)
@@ -155,7 +156,7 @@ create_benchmarks_tr_score <- function(data) {
     data,
     benchmark_tr_score = ifelse(
       is.na(.data$profile_ranking) | is.na(.data$reduction_targets),
-      NA,
+      NA_character_,
       paste(.data$scenario, .data$year, .data$benchmark, sep = "_")
     )
   )
@@ -171,4 +172,15 @@ create_trs_average <- function(data) {
 
 limit_transition_risk_score_between_0_and_1 <- function(data) {
   mutate(data, transition_risk_score = pmin(pmax(data$transition_risk_score, 0), 1))
+}
+
+add_benchmark_tr_score_avg <- function(data) {
+  mutate(
+    data,
+    benchmark_tr_score_avg = ifelse(
+      is.na(.data$profile_ranking_avg) | is.na(.data$reduction_targets_avg),
+      NA_character_,
+      paste(.data$scenario, .data$year, .data$benchmark, sep = "_")
+    )
+  )
 }

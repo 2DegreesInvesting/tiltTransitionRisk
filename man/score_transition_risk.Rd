@@ -4,60 +4,71 @@
 \alias{score_transition_risk}
 \title{Transition Risk Score}
 \usage{
-score_transition_risk(
-  emissions_profile_at_product_level,
-  sector_profile_at_product_level
-)
+score_transition_risk(emissions_profile, sector_profile, include_co2 = FALSE)
 }
 \arguments{
-\item{emissions_profile_at_product_level}{Dataframe. Emissions profile product level output}
+\item{emissions_profile}{Nested data frame. The output of
+\code{profile_emissions()}.}
 
-\item{sector_profile_at_product_level}{Dataframe. Sector profile product level output}
+\item{sector_profile}{Nested data frame. The output of \code{profile_sector()}.}
+
+\item{include_co2}{Logical. Include \verb{co2_*} columns ?}
 }
 \value{
+A data frame with the column \code{companies_id}, and the nested
+columns\code{product} and \code{company} holding the outputs at product and company
+level.
+
 A dataframe
 }
 \description{
 Calulate Transition Risk Score at product level and company level
 }
 \examples{
-library(dplyr)
 library(readr, warn.conflicts = FALSE)
-library(tiltToyData)
+library(dplyr, warn.conflicts = FALSE)
+library(tiltToyData, warn.conflicts = FALSE)
 library(tiltIndicator)
 library(tiltIndicatorAfter)
 
-restore <- options(readr.show_col_types = FALSE)
+set.seed(123)
+restore <- options(list(
+  readr.show_col_types = FALSE,
+  tiltIndicatorAfter.output_co2_footprint = TRUE
+))
 
-emissions_companies <- read_csv(toy_emissions_profile_any_companies())
-products <- read_csv(toy_emissions_profile_products_ecoinvent())
-europages_companies <- read_csv(toy_europages_companies())
-ecoinvent_activities <- read_csv(toy_ecoinvent_activities())
-ecoinvent_europages <- read_csv(toy_ecoinvent_europages())
-isic_name <- read_csv(toy_isic_name())
+toy_emissions_profile_products_ecoinvent <- read_csv(toy_emissions_profile_products_ecoinvent())
+toy_emissions_profile_any_companies <- read_csv(toy_emissions_profile_any_companies())
+toy_sector_profile_any_scenarios <- read_csv(toy_sector_profile_any_scenarios())
+toy_sector_profile_companies <- read_csv(toy_sector_profile_companies())
+toy_europages_companies <- read_csv(toy_europages_companies())
+toy_ecoinvent_activities <- read_csv(toy_ecoinvent_activities())
+toy_ecoinvent_europages <- read_csv(toy_ecoinvent_europages())
+toy_ecoinvent_inputs <- read_csv(toy_ecoinvent_inputs())
+toy_isic_name <- read_csv(toy_isic_name())
 
-emissions_profile_at_product_level <- profile_emissions(
-  companies = emissions_companies,
-  co2 = products,
-  europages_companies = europages_companies,
-  ecoinvent_activities = ecoinvent_activities,
-  ecoinvent_europages = ecoinvent_europages,
-  isic = isic_name
-) |> unnest_product()
+emissions_profile <- profile_emissions(
+  companies = toy_emissions_profile_any_companies,
+  co2 = toy_emissions_profile_products_ecoinvent,
+  europages_companies = toy_europages_companies,
+  ecoinvent_activities = toy_ecoinvent_activities,
+  ecoinvent_europages = toy_ecoinvent_europages,
+  isic = toy_isic_name
+)
 
-sector_companies <- read_csv(toy_sector_profile_companies())
-scenarios <- read_csv(toy_sector_profile_any_scenarios())
+sector_profile <- profile_sector(
+  companies = toy_sector_profile_companies,
+  scenarios = toy_sector_profile_any_scenarios,
+  europages_companies = toy_europages_companies,
+  ecoinvent_activities = toy_ecoinvent_activities,
+  ecoinvent_europages = toy_ecoinvent_europages,
+  isic = toy_isic_name
+)
 
-sector_profile_at_product_level <- profile_sector(
-  companies = sector_companies,
-  scenarios = scenarios,
-  europages_companies = europages_companies,
-  ecoinvent_activities = ecoinvent_activities,
-  ecoinvent_europages = ecoinvent_europages,
-  isic = isic_name
-) |> unnest_product()
-
-result <- score_transition_risk(emissions_profile_at_product_level, sector_profile_at_product_level)
+result <- score_transition_risk(emissions_profile,
+  sector_profile,
+  include_co2 = TRUE
+)
 
 result |> unnest_product()
 

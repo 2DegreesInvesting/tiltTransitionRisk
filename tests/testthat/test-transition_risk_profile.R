@@ -743,4 +743,3 @@ test_that("All columns are rounded off to 4 decimal places", {
   result <- round_off_to_4_decimal_places_impl(round_cols)
   expect_true(all(result$numerical_col == round(result$numerical_col, 4), na.rm = TRUE))
 })
-
