@@ -1,5 +1,9 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# tiltTransitionRisk 0.0.0.9005 (2025-02-14)
+
+* Resolve left join issue to cover all the products in final output (#25).
+
 # tiltTransitionRisk 0.0.0.9004 (2024-10-28)
 
 * Add Transition risk code from `tiltIndicatorAfter` repository (#24).

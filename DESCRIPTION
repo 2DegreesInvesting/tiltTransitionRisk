@@ -1,6 +1,6 @@
 Package: tiltTransitionRisk
 Title: Transition Risk
-Version: 0.0.0.9004
+Version: 0.0.0.9005
 Authors@R: c(
     person("Kalash", "Singhal", , "kalash@2degrees-investing.org", role = c("aut", "cre")),
     person("Mauro", "Lepore", , "maurolepore@gmail.com", role = "aut",
