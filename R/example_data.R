@@ -5,10 +5,12 @@
 #' @keywords internal
 #'
 #' @examples
-#' example_emissions_profile_at_product_level()
-#' example_sector_profile_at_product_level()
-example_emissions_profile_at_product_level <- function() {
+#' example_emissions_profile_trs()
+#' example_sector_profile_trs()
+example_emissions_profile_trs <- function() {
   local_options(readr.show_col_types = FALSE)
+  withr::local_options(list(tiltIndicatorAfter.output_co2_footprint = TRUE))
+
   toy_emissions_profile_products_ecoinvent <-
     read_csv(toy_emissions_profile_products_ecoinvent())
   toy_emissions_profile_any_companies <-
@@ -19,21 +21,20 @@ example_emissions_profile_at_product_level <- function() {
   toy_ecoinvent_inputs <- read_csv(toy_ecoinvent_inputs())
   toy_isic_name <- read_csv(toy_isic_name())
 
-  emissions_profile_at_product_level <- profile_emissions(
+  emissions_profile_trs <- profile_emissions(
     companies = toy_emissions_profile_any_companies,
     co2 = toy_emissions_profile_products_ecoinvent,
     europages_companies = toy_europages_companies,
     ecoinvent_activities = toy_ecoinvent_activities,
     ecoinvent_europages = toy_ecoinvent_europages,
     isic = toy_isic_name
-  ) |>
-    unnest_product()
-  emissions_profile_at_product_level
+  )
+  emissions_profile_trs
 }
 
 #' @export
-#' @rdname example_emissions_profile_at_product_level
-example_sector_profile_at_product_level <- function() {
+#' @rdname example_emissions_profile_trs
+example_sector_profile_trs <- function() {
   local_options(readr.show_col_types = FALSE)
   toy_sector_profile_any_scenarios <-
     read_csv(toy_sector_profile_any_scenarios())
@@ -45,16 +46,15 @@ example_sector_profile_at_product_level <- function() {
   toy_ecoinvent_inputs <- read_csv(toy_ecoinvent_inputs())
   toy_isic_name <- read_csv(toy_isic_name())
 
-  sector_profile_at_product_level <- profile_sector(
+  sector_profile_trs <- profile_sector(
     companies = toy_sector_profile_companies,
     scenarios = toy_sector_profile_any_scenarios,
     europages_companies = toy_europages_companies,
     ecoinvent_activities = toy_ecoinvent_activities,
     ecoinvent_europages = toy_ecoinvent_europages,
     isic = toy_isic_name
-  ) |>
-    unnest_product()
-  sector_profile_at_product_level
+  )
+  sector_profile_trs
 }
 
 

@@ -1,4 +1,4 @@
-prepare_trs_emissions <- function(data) {
+prepare_trs_emissions <- function(data, include_co2 = FALSE) {
   select(
     data,
     c(
@@ -6,7 +6,14 @@ prepare_trs_emissions <- function(data) {
       "benchmark",
       "profile_ranking",
       "ep_product",
-      "activity_uuid_product_uuid"
+      "activity_uuid_product_uuid",
+      "co2e_lower",
+      "co2e_upper",
+      "emission_profile",
+      "emissions_profile_best_case",
+      "emissions_profile_worst_case",
+      "emissions_profile_equal_weight",
+      if (include_co2) "co2_footprint"
     )
   )
 }
@@ -20,11 +27,13 @@ prepare_trs_sector <- function(data) {
         "year",
         "reduction_targets",
         "ep_product",
-        "activity_uuid_product_uuid"
+        "activity_uuid_product_uuid",
+        "sector_profile",
+        "sector_profile_best_case",
+        "sector_profile_worst_case",
+        "sector_profile_equal_weight"
       )
-    ) |>
-    mutate(scenario_year = paste(.data$scenario, .data$year, sep = "_")) |>
-    select(-c("scenario", "year"))
+    )
 }
 
 full_join_emmissions_sector <- function(emissions, sector) {
@@ -50,13 +59,68 @@ get_rows_union_for_common_cols <-
     distinct(bind_rows(emission_common_columns, sector_common_columns))
   }
 
-relocate_trs_columns <- function(columns) {
+relocate_trs_columns_product <- function(include_co2 = FALSE) {
+  c(
+    "companies_id",
+    "country",
+    "main_activity",
+    "ep_product",
+    "postcode",
+    "address",
+    "activity_uuid_product_uuid",
+    "matched_activity_name",
+    "matched_reference_product",
+    "unit",
+    "co2e_lower",
+    "co2e_upper",
+    "emission_profile",
+    "benchmark",
+    "profile_ranking",
+    "tilt_sector",
+    "tilt_subsector",
+    "min_headcount",
+    "max_headcount",
+    "emissions_profile_best_case",
+    "emissions_profile_worst_case",
+    "isic_4digit",
+    "matching_certainty",
+    "company_name",
+    "emissions_profile_equal_weight",
+    if (include_co2) "co2_footprint",
+    "sector_profile",
+    "scenario",
+    "year",
+    "reduction_targets",
+    "sector_profile_best_case",
+    "sector_profile_worst_case",
+    "sector_profile_equal_weight",
+    "benchmark_tr_score",
+    "transition_risk_score"
+  )
+}
+
+relocate_trs_columns_company <- function(include_co2 = FALSE) {
   c(
     "companies_id",
     "company_name",
     "country",
-    "benchmark_tr_score",
-    columns
+    "main_activity",
+    "postcode",
+    "address",
+    "benchmark",
+    "min_headcount",
+    "max_headcount",
+    "emission_profile",
+    "emission_profile_share",
+    "profile_ranking_avg",
+    if (include_co2) "co2_avg",
+    "sector_profile",
+    "sector_profile_share",
+    "scenario",
+    "year",
+    "reduction_targets_avg",
+    "benchmark_tr_score_avg",
+    "transition_risk_score_avg"
   )
 }
 
@@ -98,10 +162,7 @@ common_columns_emissions_sector_at_product_level <- function() {
     "matched_activity_name",
     "matched_reference_product",
     "unit",
-    "multi_match",
     "matching_certainty",
-    "matching_certainty_company_average",
-    "company_city",
     "postcode",
     "address",
     "main_activity",
@@ -109,8 +170,8 @@ common_columns_emissions_sector_at_product_level <- function() {
     "tilt_sector",
     "tilt_subsector",
     "isic_4digit",
-    "isic_4digit_name",
-    "ei_geography"
+    "min_headcount",
+    "max_headcount"
   )
 }
 
@@ -119,9 +180,10 @@ common_columns_emissions_sector_at_company_level <- function() {
     "companies_id",
     "company_name",
     "country",
-    "company_city",
     "postcode",
     "address",
-    "main_activity"
+    "main_activity",
+    "min_headcount",
+    "max_headcount"
   )
 }

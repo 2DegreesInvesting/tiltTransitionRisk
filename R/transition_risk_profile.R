@@ -112,7 +112,7 @@ transition_risk_profile_impl <- function(emissions_profile,
                                          co2,
                                          all_activities_scenario_sectors,
                                          scenarios) {
-  transition_risk_scores <- score_transition_risk_and_polish(emissions_profile,
+  transition_risk_scores <- score_transition_risk(emissions_profile,
     sector_profile,
     include_co2 = option_output_co2_footprint()
   )
