@@ -129,22 +129,25 @@ score_transition_risk <- function(emissions_profile,
       "reduction_targets_avg"
     ))
 
-  trs_company <- trs_product |>
+  process_transition_risk_company <- trs_product |>
     select(common_columns_emissions_sector_at_company_level(), "benchmark_tr_score", product_level_trs_column()) |>
     distinct() |>
     create_trs_average() |>
-    select(-product_level_trs_column(), -c("benchmark_tr_score")) |>
-    left_join(
-      emissions_profile_at_company_level,
-      relationship = "many-to-many",
-      by = c("companies_id")
-    ) |>
+    select(-product_level_trs_column()) |>
+    rename(benchmark_tr_score_avg = "benchmark_tr_score") |>
+    distinct()
+
+  trs_company <- emissions_profile_at_company_level |>
     left_join(
       sector_profile_at_company_level,
       relationship = "many-to-many",
       by = c("companies_id")
     ) |>
     add_benchmark_tr_score_avg() |>
+    left_join(
+      process_transition_risk_company,
+      by = c("companies_id", "benchmark_tr_score_avg")
+    ) |>
     relocate(relocate_trs_columns_company(include_co2)) |>
     distinct()
 
@@ -165,7 +168,11 @@ create_benchmarks_tr_score <- function(data) {
 create_trs_average <- function(data) {
   mutate(
     data,
-    transition_risk_score_avg = mean(.data$transition_risk_score, na.rm = TRUE),
+    transition_risk_score_avg = ifelse(
+      is.na(.data$benchmark_tr_score),
+      NA_real_,
+      mean(.data$transition_risk_score, na.rm = TRUE)
+    ),
     .by = c("companies_id", "benchmark_tr_score")
   )
 }

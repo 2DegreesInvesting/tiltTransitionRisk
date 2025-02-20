@@ -104,7 +104,8 @@ transition_risk_profile <- function(emissions_profile,
       for_webtool = for_webtool,
       include_co2 = option_output_co2_footprint()
     ) |>
-    remove_case3_companies()
+    remove_case3_companies() |>
+    remove_emissions_profile_products_companies_with_no_result()
 }
 
 transition_risk_profile_impl <- function(emissions_profile,
@@ -182,4 +183,19 @@ identify_case3_companies <- function(data) {
       .by = col_companies_id()
     ) |>
     filter(.data$check)
+}
+
+remove_emissions_profile_products_companies_with_no_result <- function(data) {
+  product <- data |>
+    unnest_product() |>
+    filter(!(is.na(.data$grouping_emission) & is.na(.data$emission_category)))
+
+  company <- data |>
+    unnest_company() |>
+    filter(!(is.na(.data$grouping_emission) &
+      is.na(.data$emission_rank_avg_equal_weight) &
+      is.na(.data$emission_rank_avg_best_case) &
+      is.na(.data$emission_rank_avg_worst_case)))
+
+  tilt_profile(nest_levels(product, company))
 }

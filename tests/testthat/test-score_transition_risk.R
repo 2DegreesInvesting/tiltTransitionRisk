@@ -114,7 +114,7 @@ test_that("calculates `transition_risk_score_avg` correctly", {
       )
     )
 
-  expect_equal(round(unique(out$transition_risk_score_avg), 4), 0.2117)
+  expect_equal(round(unique(na.omit(out$transition_risk_score_avg)), 4), 0.2117)
 })
 
 test_that(
@@ -160,7 +160,7 @@ test_that(
 
     # Both the ep_products are present only in one dataframe which will lead to
     # unmatched results and thereafter Null in `transition_risk_score_avg` column
-    expect_equal(unique(out$transition_risk_score_avg), NaN)
+    expect_equal(unique(out$transition_risk_score_avg), NA_real_)
   }
 )
 
@@ -308,7 +308,7 @@ test_that("limits `transition_risk_score` between 0 and 1", {
   # Due to large positive and negative `reduction_targets` values,
   # `transition_risk_score` should not be more than 1 and less than 0.
   expected_values <- c(0, 1)
-  expect_equal(unique(out$transition_risk_score), expected_values)
+  expect_equal(unique(na.omit(out$transition_risk_score)), expected_values)
 })
 
 test_that("with `*.output_co2_footprint` unset, `include_co2 = TRUE` yields an error", {

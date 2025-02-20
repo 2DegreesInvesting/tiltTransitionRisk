@@ -84,9 +84,9 @@ test_that("outputs `NA` transition risk category for `NA` transition risk score 
     scenarios = toy_sector_profile_any_scenarios
   ) |>
     unnest_product() |>
-    filter(activity_uuid_product_uuid == "76269c17-78d6-420b-991a-aa38c51b45b7")
+    filter(activity_uuid_product_uuid == "833caa78-30df-4374-900f-7f88ab44075b")
 
-  # Transition risk score is `NA` for uuid "76269c17-78d6-420b-991a-aa38c51b45b7"
+  # Transition risk score is `NA` for uuid "833caa78-30df-4374-900f-7f88ab44075b"
   expect_true(is.na(unique(output$transition_risk_score)))
   # `transition_risk_category` is `NA` for `NA` transition risk score
   expect_true(is.na(unique(output$transition_risk_category)))
@@ -591,7 +591,7 @@ test_that("`transition_risk_NA_share` is not NA for all cases of benchmark combi
   )
 
   output_product <- output |> unnest_product()
-  benchmark_cases <- c("1.5C RPS_2030_all", "NA_NA_all", "NA_NA_NA")
+  benchmark_cases <- c("1.5C RPS_2030_all", "NA_NA_all", "NZ 2050_2050_unit_isic_4digit")
   expect_true(all(benchmark_cases %in% unique(output_product$grouping_transition_risk)))
 
   out_na <- filter(output_product, is.na(transition_risk_NA_share))
@@ -639,7 +639,7 @@ test_that("`transition_risk_NA_share` is not greater than 1 and not less than 0 
   )
 
   output_product <- output |> unnest_product()
-  benchmark_cases <- c("1.5C RPS_2030_all", "NA_NA_all", "NA_NA_NA")
+  benchmark_cases <- c("1.5C RPS_2030_all", "NA_NA_all", "NZ 2050_2050_unit_isic_4digit")
   expect_true(all(benchmark_cases %in% unique(output_product$grouping_transition_risk)))
 
   out_na <- unique(output_product$transition_risk_NA_share)
