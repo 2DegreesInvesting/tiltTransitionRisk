@@ -83,10 +83,7 @@ score_transition_risk <- function(emissions_profile,
     get_rows_union_for_common_cols(
       emissions_profile_at_product_level,
       sector_profile_at_product_level
-    ) |>
-    group_by(across(-c("tilt_sector", "tilt_subsector", "isic_4digit"))) |>
-    filter(!(is.na(.data$tilt_sector) & is.na(.data$tilt_subsector) & is.na(.data$isic_4digit) & n() > 1)) |>
-    ungroup()
+    )
 
   trs_emissions <-
     prepare_trs_emissions(emissions_profile_at_product_level, include_co2)
